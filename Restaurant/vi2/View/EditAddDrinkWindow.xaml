@@ -1,0 +1,27 @@
+﻿<Window x:Class="vi2.View.EditAddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:vi2.View"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}" Height="700" Width="500">
+    <StackPanel Margin="10">
+        <Label>Название</Label>
+        <TextBox x:Name="NameTextBox" Text="{Binding DishAndDrink.Name}"  Margin="5"/>
+        <Label>Описание</Label>
+        <TextBox x:Name="DescriptionTextBox" Text="{Binding DishAndDrink.Description}"  Margin="5"/>
+        <Label>Состав</Label>
+        <TextBox x:Name="CompositionTextBox" Text="{Binding DishAndDrink.Composition}"  Margin="5"/>
+        <Label>Изображение</Label>
+        <TextBox x:Name="PriceTextBox" Text="{Binding DishAndDrink.Price}"  Margin="5"/>
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <TextBox x:Name="FotoTextBox" Text="{Binding DishAndDrink.Foto}"  Margin="5" Width="200"/>
+            <Button Content="Загрузить..." Click="UploadFoto_Click" Margin="5"/>
+        </StackPanel>
+        <Image x:Name="FotoImage" Source="{Binding DishAndDrink.Foto}" Height="300" Width="300" Margin="5" Stretch="UniformToFill"/>
+        <!-- Добавьте другие поля, необходимые для вашей записи -->
+        <Button Content="Сохранить" Click="SaveButton_Click" Margin="5"/>
+        <Button Content="Отмена" Click="CancelButton_Click" Margin="5"/>
+    </StackPanel>
+</Window>

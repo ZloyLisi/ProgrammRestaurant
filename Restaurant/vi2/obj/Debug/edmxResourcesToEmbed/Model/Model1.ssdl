@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище RestaurantBDModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CategoryDish">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoryDishAndDrink">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoryDrink">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DishAndDrink">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Composition" Type="nvarchar(max)" />
+    <Property Name="Foto" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="IdCategoryDish" Type="int" />
+    <Property Name="IdCategoryDrink" Type="int" />
+    <Property Name="IdCategoryDishAndDrink" Type="int" />
+    <Property Name="IdUser" Type="int" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdDishAndDrink" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdRole" Type="int" Nullable="false" />
+    <Property Name="Login" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Dish_Category">
+    <End Role="CategoryDish" Type="Self.CategoryDish" Multiplicity="0..1" />
+    <End Role="DishAndDrink" Type="Self.DishAndDrink" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryDish">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DishAndDrink">
+        <PropertyRef Name="IdCategoryDish" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DishAndDrink_CategoryDishAndDrink">
+    <End Role="CategoryDishAndDrink" Type="Self.CategoryDishAndDrink" Multiplicity="0..1" />
+    <End Role="DishAndDrink" Type="Self.DishAndDrink" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryDishAndDrink">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DishAndDrink">
+        <PropertyRef Name="IdCategoryDishAndDrink" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DishAndDrink_CategoryDrink">
+    <End Role="CategoryDrink" Type="Self.CategoryDrink" Multiplicity="0..1" />
+    <End Role="DishAndDrink" Type="Self.DishAndDrink" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryDrink">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DishAndDrink">
+        <PropertyRef Name="IdCategoryDrink" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DishAndDrink_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="DishAndDrink" Type="Self.DishAndDrink" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DishAndDrink">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_DishAndDrink">
+    <End Role="DishAndDrink" Type="Self.DishAndDrink" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DishAndDrink">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="IdDishAndDrink" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="IdRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище RestaurantBDModelContainer">
+    <EntitySet Name="CategoryDish" EntityType="Self.CategoryDish" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CategoryDishAndDrink" EntityType="Self.CategoryDishAndDrink" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CategoryDrink" EntityType="Self.CategoryDrink" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DishAndDrink" EntityType="Self.DishAndDrink" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Dish_Category" Association="Self.FK_Dish_Category">
+      <End Role="CategoryDish" EntitySet="CategoryDish" />
+      <End Role="DishAndDrink" EntitySet="DishAndDrink" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DishAndDrink_CategoryDishAndDrink" Association="Self.FK_DishAndDrink_CategoryDishAndDrink">
+      <End Role="CategoryDishAndDrink" EntitySet="CategoryDishAndDrink" />
+      <End Role="DishAndDrink" EntitySet="DishAndDrink" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DishAndDrink_CategoryDrink" Association="Self.FK_DishAndDrink_CategoryDrink">
+      <End Role="CategoryDrink" EntitySet="CategoryDrink" />
+      <End Role="DishAndDrink" EntitySet="DishAndDrink" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DishAndDrink_User" Association="Self.FK_DishAndDrink_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="DishAndDrink" EntitySet="DishAndDrink" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_DishAndDrink" Association="Self.FK_Order_DishAndDrink">
+      <End Role="DishAndDrink" EntitySet="DishAndDrink" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
